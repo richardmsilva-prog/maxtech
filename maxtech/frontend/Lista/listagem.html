@@ -1,0 +1,142 @@
+<div class="table-container">
+            <table>
+                <thead>
+                <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* O segredo: faz os dois blocos ficarem lado a lado */
+    .container-geral {
+        display: flex;
+        min-height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Estilo da Sidebar */
+    .sidebar {
+        width: 250px;
+        background-color: #1a202c; /* Cinza escuro profissional */
+        color: white;
+        padding: 20px;
+    }
+
+    .logo h2 {
+        color: #4299e1;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .menu a {
+        display: block;
+        color: #a0aec0;
+        text-decoration: none;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .menu a:hover, .menu a.active {
+        background-color: #2d3748;
+        color: white;
+    }
+
+    /* Estilo da área da direita */
+    .conteudo-principal {
+        flex: 1; /* Ocupa o resto da tela */
+        background-color: #f7fafc;
+        padding: 40px;
+    }
+
+    header {
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 20px;
+    }
+    body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; color: #333; }
+    main { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    h1 { color: #871c9c; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { background: #8b17d8; color: white; padding: 12px; text-align: left; }
+    td { padding: 12px; border-bottom: 1px solid #eee; }
+    .status { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+    .em-andamento { background: #fff3cd; color: #856404; }
+    .concluido { background: #d4edda; color: #155724; }
+    button { background: #6d19db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+</style>
+                    <tr>
+                        <th scope="col">Cód. Pedido</th>
+                        <th scope="col">Serviço de Instalação</th>
+                        <th scope="col">Cliente / Endereço</th>
+                        <th scope="col">Data Agendada</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#2050</td>
+                        <td>Instalação de Máquina de Lavar Brastemp</td>
+                        <td>Carlos Alberto - Rua das Palmeiras, 102</td>
+                        <td>26/03/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2051</td>
+                        <td>Instalação de Cooktop 4 Bocas</td>
+                        <td>Marina Silva - Av. Principal, 500</td>
+                        <td>27/03/2026</td>
+                        <td><span class="status concluido">Concluído</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2052</td>
+                        <td>Configuração de Smart TV 65"</td>
+                        <td>Jorge Luiz - Rua Chile, 45</td>
+                        <td>28/03/2026</td>
+                        <td><span class="status pendente">Pendente</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2053</td>
+                        <td>Instalação de geladeira inverse Samsung</td>
+                        <td>Alexandre do Rosario - RUa iririu, 178</td>
+                        <td>29/03/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2054</td>
+                        <td>Instalação de fogao Brastemp</td>
+                        <td>lucas Alexandre - Rua Joao Colin, 206</td>
+                        <td>30/03/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                     <tr>
+                        <td>#2055</td>
+                        <td>Instalação de forno Brastemp</td>
+                        <td>DIogo Jota - Rua Dona Francisca, 100</td>
+                        <td>31/03/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                     <tr>
+                        <td>#2056</td>
+                        <td>Instalação Smart Tv 4k LG</td>
+                        <td>Kamile Eduarda - Nove de MArço, 404</td>
+                        <td>01/04/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                     <tr>
+                        <td>#2057</td>
+                        <td>Instalação Ar consicionado LG</td>
+                        <td>Adriana Marques - Rua Procopio Gomes, 97</td>
+                        <td>02/04/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2057</td>
+                        <td>Instalação </td>
+                        <td>Adriana Marques - Rua Procopio Gomes, 97</td>
+                        <td>02/04/2026</td>
+                        <td><span class="status em-andamento">Agendado</span></td>
+                    </tr>
+              
+                    
+                </tbody>
+            </table>
+        </div>

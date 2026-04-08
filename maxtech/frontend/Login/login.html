@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXTECH - Solução Completa</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <div class="brand-section">
+            <img src="Logo_da_Maxtech.png" alt="Logo da empresa MaxTech" class="brand-logo">
+            </div>
+
+        <div class="login-section">
+            <div class="login-box">
+                <h2>Acesse sua conta</h2>
+                <p>Informe seus dados para entrar no sistema.</p>
+
+                <form>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" placeholder="exemplo@maxtech.com">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" placeholder="Digite sua senha">
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Lembrar de mim</label>
+                        </div>
+                        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary">ENTRAR</button>
+                </form>
+
+                <div class="separator">
+                    <span>ou</span>
+                </div>
+
+                <button class="btn-secondary">
+                    <i class="fas fa-user-plus"></i> CRIAR CONTA
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 MAXTECH — Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="#">Termos de Uso</a>
+                <span>|</span>
+                <a href="#">Privacidade</a>
+                <span>|</span>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <header class="main-header">
+    <div class="header-container">
+        <div class="header-logo">MAXTECH</div>
+        <nav class="header-nav">
+            <a href="#">Loja</a>
+            <a href="#">Ofertas</a>
+            <a href="#">Rastrear Pedido</a>
+            <a href="#">Suporte</a>
+        </nav>
+        <div class="header-actions">
+            <a href="#" class="btn-cart"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</header>
+
+<div class="carousel">
+    <div class="carousel-item active">
+        <img src="logotipo_roxa.png" alt="" class="brand-logo">
+        <p class="slogan">VENDAS • ENTREGA • INSTALAÇÃO</p>
+    </div>
+    
+    <div class="carousel-item">
+        <div class="promo-banner">
+            <i class="fas fa-tags promo-icon"></i>
+            <h3>Ofertas da Semana</h3>
+            <p>Até 30% OFF em Linha Branca. Confira!</p>
+            <a href="#" class="btn-text">Ver Ofertas →</a>
+        </div>
+    </div>
+
+    <div class="carousel-item">
+        <div class="product-highlight">
+            <i class="fas fa-snowflake product-icon"></i>
+            <h3>Ar Condicionado</h3>
+            <p>Instalação grátis incluída. Aproveite!</p>
+            <a href="#" class="btn-text">Saiba Mais →</a>
+        </div>
+    </div>
+</div>
+
+<div class="carousel-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+</div>
+
+<div class="carousel">
+    <div class="carousel-item active">
+        <img src="logotipo_roxa.png" alt="" class="brand-logo">
+        <p class="slogan">VENDAS • ENTREGA • INSTALAÇÃO</p>
+    </div>
+    
+    <div class="carousel-item">
+        <div class="promo-banner">
+            <i class="fas fa-tags promo-icon"></i>
+            <h3>Ofertas da Semana</h3>
+            <p>Até 30% OFF em Linha Branca. Confira!</p>
+            <a href="#" class="btn-text">Ver Ofertas →</a>
+        </div>
+    </div>
+
+    <div class="carousel-item">
+        <div class="product-highlight">
+            <i class="fas fa-snowflake product-icon"></i>
+            <h3>Ar Condicionado</h3>
+            <p>Instalação grátis incluída. Aproveite!</p>
+            <a href="#" class="btn-text">Saiba Mais →</a>
+        </div>
+    </div>
+</div>
+
+<div class="carousel-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+</div>
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            dots[i].classList.remove('active');
+        });
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }, 5000); 
+</script>
+</body>
+</html>
