@@ -1,0 +1,42 @@
+// Seleciona o formulário de login no HTML
+const formLogin = document.getElementById('seu-formulario-id');
+
+formLogin.addEventListener('submit', async function(event) {
+    // 1. Evita que a página recarregue ao clicar em "Entrar"
+    event.preventDefault(); 
+
+    // 2. Captura os valores digitados no frontend
+    const emailDigitado = document.getElementById('email-id').value;
+    const senhaDigitada = document.getElementById('senha-id').value;
+
+    try {
+        // 3. Faz a conexão com o Backend (Ajuste o caminho/URL para o seu arquivo backend)
+        const resposta = await fetch('http://localhost/maxtech/backend/login/seu_arquivo_login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // Converte os dados para texto antes de enviar
+            body: JSON.stringify({
+                email: emailDigitado,
+                senha: senhaDigitada
+            })
+        });
+
+        // 4. Recebe a resposta do backend
+        const dados = await resposta.json();
+
+        // 5. Toma uma decisão baseada na resposta
+        if (dados.sucesso === true) {
+            // Se deu certo, redireciona para a pasta Dashboard
+            window.location.href = '../Dashboard/index.html'; 
+        } else {
+            // Se deu errado, avisa o usuário
+            alert('Erro: ' + dados.mensagem); 
+        }
+
+    } catch (erro) {
+        console.error('Erro na conexão entre frontend e backend:', erro);
+        alert('Não foi possível conectar ao servidor.');
+    }
+});
