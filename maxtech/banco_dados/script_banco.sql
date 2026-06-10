@@ -55,5 +55,5 @@ CREATE TABLE IF NOT EXISTS instalacoes (
     status_instalacao ENUM('Aguardando Entrega', 'Agendada', 'Concluída') NOT NULL DEFAULT 'Aguardando Entrega',
     data_instalacao DATETIME NULL,
     tecnico_responsavel VARCHAR(100) NULL,
-    CONSTRAINT fk_instalacoes_vendas KEY (id_venda) REFERENCES vendas(id_venda) ON DELETE CASCADE
+    CONSTRAINT fk_instalacoes_vendas FOREIGN KEY (id_venda) REFERENCES vendas(id_venda) ON DELETE CASCADE
 ) ENGINE=InnoDB;
