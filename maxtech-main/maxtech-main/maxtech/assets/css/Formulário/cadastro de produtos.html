@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaxTech - Cadastro de Produtos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styleprodutos.css">
+</head>
+<body>
+
+<header>
+<nav class="navbar">
+<a href="#" class="logo">MaxTech</a>
+<ul class="nav-links">
+<li><a href="login.html">Login</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="cadastro.html" class="ativo" aria-current="page">Formulário</a></li>
+<li><a href="listagem.html">Tela de Listagem</a></li>
+<li><a href="lighthouse.html">Lighthouse</a></li>
+</ul>
+</nav>
+</header>
+
+<main class="container">
+<section class="form-wrapper">
+<h1>Cadastro de Produtos</h1>
+
+<form action="#" method="POST">
+<div class="form-group">
+<label for="nome">Nome do Produto</label>
+<input type="text" id="nome" name="nome" placeholder="Ex: Máquina de Lavar, Placa de Vídeo..." required>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label for="categoria">Categoria</label>
+<select id="categoria" name="categoria" required>
+<option value="">Selecione...</option>
+<option value="eletro">Eletrodomésticos</option>
+<option value="hardware">Peças de PC</option>
+<option value="outros">Outros</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="marca">Marca / Fabricante</label>
+<input type="text" id="marca" name="marca" placeholder="Ex: Samsung, Asus..." required>
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label for="preco">Preço Unitário (R$)</label>
+<input type="number" id="preco" name="preco" step="0.01" placeholder="0,00" required>
+</div>
+
+<div class="form-group">
+<label for="quantidade">Qtd. em Estoque</label>
+<input type="number" id="quantidade" name="quantidade" placeholder="0" required>
+</div>
+</div>
+
+<div class="form-group">
+<label for="descricao">Descrição Técnica</label>
+<textarea id="descricao" name="descricao" rows="4" placeholder="Especificações do produto..."></textarea>
+</div>
+
+<div class="botoes-area">
+<button type="reset" class="btn-cancelar">Limpar Campos</button>
+<button type="submit" class="btn-enviar">Cadastrar Produto</button>
+</div>
+</form>
+</section>
+</main>
+
+</body>
+</html>
