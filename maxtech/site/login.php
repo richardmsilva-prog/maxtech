@@ -20,7 +20,7 @@ $erro_login = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(!isset($_POST["csrf_token"]) || !hash_equals($_SESSION["csrf_token"], $_POST["csrf_token"])) {
-        die("Erro de segurança: Token CSRF inválido.")
+        die("Erro de segurança: Token CSRF inválido.");
     }
 
     try {
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         error_log("Erro no login: " . $e->getMessage());
 
-        $erro_login = "Ocorreu um erro interno. Por favor, tente novamente mais tarde."
+        $erro_login = "Ocorreu um erro interno. Por favor, tente novamente mais tarde.";
     }
 }
 ?>

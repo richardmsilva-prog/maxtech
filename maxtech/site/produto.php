@@ -102,7 +102,7 @@ try {
                 <?php else: ?>
                     <form action="carrinho.php" method="POST" class="form-comprar">
                         <label for="qtd" style="font-size: 0.9em; color: #7f8c8d;">Quantidade:</label>
-                        <input type="number" id="qtd" name="quantidade" value="1" min="1" max="<?= $produto["estoque"] ?>" style= width: 60px; padding: 5px; margin-right: 10px; margin-bottom: 15px;">
+                        <input type="number" id="qtd" name="quantidade" value="1" min="1" max="<?= $produto["estoque"] ?>" style"= width: 60px; padding: 5px; margin-right: 10px; margin-bottom: 15px;">
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
                         <input type="hidden" name="acao" value="adicionar">
                         <input type="hidden" name="id_produto" value="<?= $produto['id_produto'] ?>">

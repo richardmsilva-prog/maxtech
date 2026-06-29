@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 
 $_SESSION = array();
 
-if (init_get("session.use_cookies")) {
+if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
         $params["path"], $params["domain"],
@@ -19,7 +19,7 @@ session_destroy();
 if(!empty($_SERVER["HTTP_REFERER"])) {
     $pagina_destino = $_SERVER["HTTP_REFERER"];
 } else {
-    $pagina_destino = "index.php"
+    $pagina_destino = "index.php";
 }
 
 header("Location: ". $pagina_destino);

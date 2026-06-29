@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $nome     = trim($_POST["nome"]      ?? "");
     $usuario  = trim($_POST["usuario"]   ?? "");
-    $senha    =     ($_POST["senha"]     ?? ""); 
+    $senha    = $_POST["senha"]          ?? ""; 
     $email    = trim($_POST["email"]     ?? "");
     $telefone = trim($_POST["telefone"]  ?? "");
     $endereco = trim($_POST["endereco"]  ?? "");
@@ -36,42 +36,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $tipo_msg = "erro";
     } else {
         try {
-
             require_once "../systems/core/conexao.php";
 
-            $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ? OR email = ?");
-            $stmt->bind_param("ss", $usuario, $email);
+            $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ?");
+            $stmt->bind_param("ss", $usuario);
             $stmt->execute();
             $query = $stmt->get_result();
 
             if ($query->num_rows > 0) {
-                $mensagem = "Já existe um usuário com esse nome de usuário ou e-mail. Tente outro.";
+                $mensagem = "Já existe um usuário com esse nome de usuário. Tente outro.";
                 $tipo_msg = "erro";
                 $stmt->close(); 
             } else {
-                    $stmt->close(); 
+                $stmt->close(); 
 
-                    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            
-                    $stmt = $mysqli->prepare("INSERT INTO usuarios (nome, usuario, senha, email, telefone, endereco) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("ssssss", $nome, $usuario, $senha_hash, $email, $telefone, $endereco);
-            
-                    if ($stmt->execute()) {
-                        $mensagem = "Cadastro realizado com sucesso! Você já pode fazer login.";
-                        $tipo_msg = "sucesso";
+                $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+        
+                $stmt = $mysqli->prepare("INSERT INTO usuarios (nome, usuario, senha, email, telefone, endereco) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssssss", $nome, $usuario, $senha_hash, $email, $telefone, $endereco);
+        
+                if ($stmt->execute()) {
+                    $mensagem = "Cadastro realizado com sucesso! Você já pode fazer login.";
+                    $tipo_msg = "sucesso";
                     
-                        $_POST = []; 
-                    }
-                    $stmt->close(); 
+                    $_POST = []; 
                 }
-
-            } catch (Exception $e) {
-                error_log("Erro no cadastro: " . $e->getMessage());
-                $mensagem = "Ocorreu um erro interno. Por favor, tente novamente mais tarde.";
-                $tipo_msg = "erro";
+                $stmt->close(); 
             }
+
+        } catch (Exception $e) {
+            error_log("Erro no cadastro: " . $e->getMessage());
+            $mensagem = "Ocorreu um erro interno. Por favor, tente novamente mais tarde.";
+            $tipo_msg = "erro";
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
