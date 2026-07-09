@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 require_once "../systems/core/protecao.php";
 require_once "../systems/core/conexao.php"; 
@@ -10,6 +13,10 @@ if (empty($_GET["pedido"])) {
 
 $idPedido = $_GET["pedido"];
 $idUsuario = $_SESSION["id"];
+
+// Variáveis para a Navbar
+$logado      = isset($_SESSION['id']);
+$nomeUsuario = $_SESSION['nome'] ?? 'Cliente';
 
 $produtosComprados = [];
 $dadosVenda = null;
@@ -67,28 +74,60 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Confirmado #<?= htmlspecialchars($dadosVenda["id_venda"]) ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Pedido Confirmado #<?= htmlspecialchars($dadosVenda["id_venda"]) ?> - MaxTech</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        .bg-topbar {
+            background-color: #2c3e50;
+        }
+        .success-icon {
+            font-size: 5rem;
+            color: #198754;
+        }
         @media print {
             body { 
                 background-color: #ffffff !important; 
             }
-            .no-print, .btn, hr { 
+            .no-print, .btn, hr, .topbar, footer { 
                 display: none !important; 
             }
             .card { 
                 box-shadow: none !important; 
-                border: none !important; 
+                border: 1px solid #dee2e6 !important; 
             }
         }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
-    <div class="container mt-5 pt-3 mb-5">
+    <nav class="navbar navbar-dark bg-topbar topbar py-3 shadow-sm no-print">
+        <div class="container flex-column flex-sm-row justify-content-between gap-2">
+            <a class="navbar-brand fw-bold fs-4 m-0" href="index.php">
+                <i class="fa-solid fa-microchip text-primary me-2"></i>MaxTech
+            </a>
+            <div class="topbar-usuario text-white small">
+                <?php if ($logado): ?>
+                    <i class="fa-solid fa-user text-muted me-1"></i> Olá, <strong class="text-light"><?= htmlspecialchars($nomeUsuario) ?></strong>
+                    <span class="mx-2 text-muted">|</span>
+                    <a href="logout.php" class="text-danger text-decoration-none fw-semibold"><i class="fa-solid fa-right-from-bracket me-1"></i>Sair</a>
+                <?php else: ?>
+                    <a href="login.php" class="text-white text-decoration-none fw-bold me-2"><i class="fa-solid fa-right-to-bracket me-1"></i>Login</a>
+                    <span class="text-muted">|</span>
+                    <a href="cadastro.php" class="text-white text-decoration-none ms-2">Cadastrar-se</a>
+                <?php endif; ?>
+                <span class="mx-2 text-muted">|</span>
+                <a href="index.php" class="text-info text-decoration-none fw-semibold"><i class="fa-solid fa-store me-1"></i>Voltar à Loja</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 flex-grow-1">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-7">
                 
@@ -96,23 +135,23 @@ try {
                     <div class="card-body p-4 p-md-5">
                         
                         <div class="text-center mb-4">
-                            <div class="mb-3 text-success no-print">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" class="bi bi-check-circle-fill mx-auto" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
+                            <div class="mb-3 no-print">
+                                <i class="fa-solid fa-circle-check success-icon"></i>
                             </div>
                             <h2 class="fw-bold text-dark">Compra Confirmada!</h2>
-                            <p class="text-muted">
-                                Obrigado, <strong><?= htmlspecialchars($_SESSION["nome"]) ?></strong>! Enviamos os detalhes e o comprovante para o seu e-mail cadastrado.
+                            <p class="text-muted fs-6">
+                                Obrigado, <strong><?= htmlspecialchars($nomeUsuario) ?></strong>! Seu pedido foi processado com sucesso.
                             </p>
                         </div>
 
-                        <div class="bg-white border p-4 rounded-3 mb-4">
-                            <h5 class="fw-bold mb-3 border-bottom pb-2 text-secondary text-uppercase">Resumo do Pedido</h5>
+                        <div class="bg-white border p-4 rounded-3 mb-4 shadow-sm">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2 text-secondary text-uppercase fs-6">
+                                <i class="fa-solid fa-receipt me-2"></i>Resumo do Pedido
+                            </h5>
                             
                             <div class="d-flex justify-content-between mb-2 small text-muted">
-                                <span>Pedido: <strong class="text-dark">#<?= htmlspecialchars($dadosVenda["id_venda"]) ?></strong></span>
-                                <span>Data: <?= $dataFormatada ?></span>
+                                <span>Número do Pedido: <strong class="text-dark fs-6">#<?= htmlspecialchars($dadosVenda["id_venda"]) ?></strong></span>
+                                <span>Data: <strong><?= $dataFormatada ?></strong></span>
                             </div>
                             
                             <hr class="my-3">
@@ -135,26 +174,28 @@ try {
                                 </table>
                             </div>
 
-                            <hr class="my-3">
+                            <hr class="my-3 border-secondary border-opacity-25">
 
                             <div class="d-flex justify-content-between align-items-center pt-2">
                                 <span class="fw-bold text-dark fs-5">Valor Total:</span>
-                                <span class="fw-bold text-primary fs-4">R$ <?= $totalFormatado ?></span>
+                                <span class="fw-bold text-success fs-3">R$ <?= $totalFormatado ?></span>
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 no-print">
-                            <a href="meus_pedidos.php" class="btn btn-primary btn-lg rounded-3 fw-semibold">Acompanhar Entrega e Instalação</a>
+                        <div class="d-grid gap-3 no-print mt-5">
+                            <a href="meus_pedidos.php" class="btn btn-success btn-lg rounded-3 fw-bold shadow-sm">
+                                <i class="fa-solid fa-truck-fast me-2"></i>Acompanhar Entrega e Instalação
+                            </a>
                             
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <button onclick="window.print();" class="btn btn-outline-secondary w-100 py-2 rounded-3">
-                                        Imprimir Recibo
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <button onclick="window.print();" class="btn btn-outline-secondary w-100 py-2 rounded-3 fw-semibold">
+                                        <i class="fa-solid fa-print me-2"></i>Imprimir Recibo
                                     </button>
                                 </div>
-                                <div class="col-6">
-                                    <a href="index.php" class="btn btn-outline-secondary w-100 py-2 rounded-3">
-                                        Continuar Comprando
+                                <div class="col-12 col-sm-6">
+                                    <a href="index.php" class="btn btn-outline-primary w-100 py-2 rounded-3 fw-semibold">
+                                        <i class="fa-solid fa-basket-shopping me-2"></i>Continuar Comprando
                                     </a>
                                 </div>
                             </div>
@@ -162,7 +203,7 @@ try {
 
                         <div class="text-center mt-4 no-print">
                             <small class="text-muted">
-                                Precisa de ajuda com este pedido? <a href="contato.php" class="text-decoration-none">Fale com o nosso suporte</a>.
+                                Precisa de ajuda com este pedido? <a href="contato.php" class="text-primary text-decoration-none fw-semibold">Fale com o nosso suporte</a>.
                             </small>
                         </div>
 
@@ -171,7 +212,13 @@ try {
 
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="rodape mt-auto py-4 bg-white border-top text-center text-secondary no-print">
+        <div class="container">
+            <p class="mb-0 small">&copy; <?= date("Y") ?> <strong class="text-dark">MaxTech</strong>. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

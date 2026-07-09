@@ -1,0 +1,504 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   MAXTECH - STYLE.CSS (ARQUITETURA UNIFICADA)
+   ==========================================================================
+   1. VARIAVEIS INTERNAS
+   2. CUSTOMIZAÇÕES DE BASE & SOBREPOSIÇÕES BOOTSTRAP
+   3. COMPONENTES GLOBAIS REUSÁVEIS
+   4. LAYOUTS COMPARTILHADOS (HEADER / FOOTER)
+   5. PÁGINAS ESPECÍFICAS
+      5.1. Login (.pg-login)
+      5.2. Cadastro (.pg-cadastro)
+      5.3. Produto (.pg-produto)
+      5.4. Catálogo / Painel (.pg-painel)
+      5.5. Carrinho (.pg-carrinho)
+      5.6. Checkout (.pg-checkout)
+      5.7. Sucesso (.pg-sucesso)
+   6. IMPRESSÃO E UTILITÁRIOS
+   ========================================================================== */
+
+/* --- 1. VARIAVEIS INTERNAS --- */
+:root {
+    --cor-primaria: #6c4e9e; 
+    --cor-secundaria: #4a346e; 
+    --cor-clara: #eaddff; 
+    --cor-vibrante: #8a64cf; 
+    --cor-fundo: #fdfcff;
+    --cor-fundo-alt: #f9f9f9;
+    --cor-texto: #333333;
+    --cor-texto-claro: #666666;
+    --cor-borda: #cccccc;
+    --cor-foco: #ffcc00;
+    
+    --sombra-leve: 0 2px 5px rgba(0,0,0,0.05);
+    --sombra-media: 0 4px 15px rgba(108, 78, 158, 0.1);
+    --header-height: 70px;
+}
+
+/* --- 2. CUSTOMIZAÇÕES DE BASE & SOBREPOSIÇÕES BOOTSTRAP --- */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--cor-foco) !important;
+    outline-offset: 2px;
+}
+
+.fs-7 {
+    font-size: 0.85rem;
+}
+
+/* --- 3. COMPONENTES GLOBAIS REUSÁVEIS --- */
+
+.btn-custom-primary {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.btn-custom-primary:hover, .btn-custom-primary:focus {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+    box-shadow: 0 0 0 4px var(--cor-clara);
+}
+
+.btn-custom-secondary {
+    background-color: transparent;
+    color: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.btn-custom-secondary:hover, .btn-custom-secondary:focus {
+    background-color: var(--cor-clara);
+    color: var(--cor-secundaria);
+    border-color: var(--cor-secundaria);
+}
+
+.alert-custom-danger {
+    background-color: #fce8e6;
+    color: #a8201a;
+    border: 1px solid #f5c2be;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.alert-custom-success {
+    background-color: #e6f9ed;
+    color: #127343;
+    border: 1px solid #c3eed5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    position: relative;
+}
+.input-wrapper .input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    color: var(--cor-primaria);
+    z-index: 5;
+    pointer-events: none;
+}
+.input-wrapper .form-control {
+    padding-left: 45px;
+    height: 48px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.input-wrapper .form-control:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px var(--cor-clara);
+    background-color: #fff;
+}
+
+.input-wrapper .toggle-password {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    color: var(--cor-texto-claro);
+    cursor: pointer;
+    z-index: 5;
+}
+.input-wrapper .toggle-password:hover {
+    color: var(--cor-primaria);
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--cor-borda);
+    opacity: 0.5;
+}
+
+.checkbox-custom:checked {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+/* --- 4. LAYOUTS COMPARTILHADOS (HEADER / FOOTER) --- */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    height: var(--header-height);
+    border-bottom: 1px solid var(--cor-clara);
+    box-shadow: var(--sombra-leve);
+}
+.header-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--cor-secundaria);
+    letter-spacing: 0.5px;
+    text-decoration: none;
+}
+.header-nav a {
+    text-decoration: none;
+    color: var(--cor-texto-claro);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+.header-nav a:hover {
+    color: var(--cor-primaria);
+}
+
+.footer {
+    border-top: 1px solid var(--cor-clara);
+    background-color: var(--cor-fundo-alt);
+    padding: 1.5rem 0;
+    margin-top: auto;
+}
+
+.hover-primary {
+    transition: color 0.2s ease;
+}
+.hover-primary:hover {
+    color: var(--cor-primaria) !important;
+}
+
+.btn-cart {
+    background-color: var(--cor-fundo-alt);
+    color: var(--cor-texto-claro);
+    border: 1px solid var(--cor-borda);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.btn-cart:hover {
+    background-color: var(--cor-clara);
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+/* ==========================================================================
+   5. PÁGINAS ESPECÍFICAS
+   ========================================================================== */
+
+/* --- 5.1. LOGIN (.pg-login) --- */
+.pg-login .main-container {
+    padding-top: calc(var(--header-height) + 40px);
+    padding-bottom: 40px;
+}
+
+.pg-login .login-box {
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid var(--cor-clara);
+    box-shadow: var(--sombra-media);
+}
+.pg-login .login-box h2 {
+    color: var(--cor-secundaria);
+    letter-spacing: -0.5px;
+}
+.pg-login .forgot-link {
+    color: var(--cor-primaria);
+}
+.pg-login .forgot-link:hover {
+    color: var(--cor-secundaria);
+    text-decoration: underline !important;
+}
+
+.pg-login .brand-section {
+    overflow: hidden;
+}
+.pg-login .carousel-item-custom {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+.pg-login .carousel-item-custom.active {
+    display: flex;
+    opacity: 1;
+}
+.pg-login .brand-logo {
+    max-height: 180px;
+    object-fit: contain;
+}
+.pg-login .slogan {
+    color: var(--cor-texto-claro);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pg-login .promo-banner {
+    background-color: var(--cor-clara);
+    color: var(--cor-secundaria);
+    border-radius: 24px;
+    max-width: 420px;
+    box-shadow: var(--sombra-leve);
+}
+.pg-login .promo-icon {
+    font-size: 2.5rem;
+    color: var(--cor-primaria);
+}
+.pg-login .promo-banner h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.pg-login .btn-text {
+    color: var(--cor-primaria);
+    text-decoration: none;
+}
+.pg-login .btn-text:hover {
+    color: var(--cor-secundaria);
+}
+
+.pg-login .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--cor-borda);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.pg-login .dot.active {
+    background-color: var(--cor-primaria);
+    width: 24px;
+    border-radius: 10px;
+}
+
+/* --- 5.2. CADASTRO (.pg-cadastro) --- */
+.pg-cadastro .main-container {
+    padding-top: calc(var(--header-height) + 40px);
+    padding-bottom: 40px;
+}
+
+.pg-cadastro .cadastro-box {
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid var(--cor-clara);
+    box-shadow: var(--sombra-media);
+    width: 100%;
+    max-width: 800px;
+}
+.pg-cadastro .cadastro-box h2 {
+    color: var(--cor-secundaria);
+    letter-spacing: -0.5px;
+}
+
+/* --- 5.3. PRODUTO (.pg-produto) --- */
+.pg-produto .main-container {
+    padding-top: calc(var(--header-height) + 20px);
+}
+
+.pg-produto .produto-box {
+    border: 1px solid var(--cor-clara);
+    border-radius: 20px !important;
+}
+
+.pg-produto .img-wrapper img {
+    max-height: 450px;
+    object-fit: cover;
+    border-color: var(--cor-clara) !important;
+}
+
+.pg-produto .price-tag {
+    color: #27ae60; 
+}
+
+.pg-produto .input-qtd {
+    width: 90px;
+    text-align: center;
+    border-color: var(--cor-borda);
+}
+
+.pg-produto .input-qtd:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px var(--cor-clara);
+}
+
+/* --- 5.4. CATÁLOGO / PAINEL (.pg-painel) --- */
+.pg-painel .main-container {
+    padding-top: calc(var(--header-height) + 20px);
+}
+
+.pg-painel .table-img-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: var(--cor-fundo-alt);
+    border: 1px solid var(--cor-clara) !important;
+}
+
+.pg-painel .price-text {
+    color: #27ae60;
+}
+
+.pg-painel .table > :not(caption) > * > * {
+    border-bottom-color: var(--cor-clara);
+    vertical-align: middle;
+}
+
+.pg-painel .table-light th {
+    background-color: var(--cor-fundo-alt);
+    color: var(--cor-secundaria);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--cor-clara);
+}
+
+/* --- 5.5. CARRINHO (.pg-carrinho) --- */
+.pg-carrinho .main-container {
+    padding-top: calc(var(--header-height) + 20px);
+}
+
+.pg-carrinho .cart-img-thumb {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    background-color: var(--cor-fundo-alt);
+    border: 1px solid var(--cor-clara) !important;
+    border-radius: 8px;
+}
+
+.pg-carrinho .price-text {
+    color: #27ae60;
+}
+
+.pg-carrinho .cart-qty-controls .qty-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--cor-borda);
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+
+.pg-carrinho .cart-qty-controls .qty-btn:hover:not(:disabled) {
+    background-color: var(--cor-clara);
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.pg-carrinho .delete-btn {
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: var(--cor-texto-claro);
+}
+.pg-carrinho .delete-btn:hover {
+    transform: scale(1.1);
+    color: #c0392b !important;
+}
+
+.pg-carrinho .table > :not(caption) > * > * {
+    border-bottom-color: var(--cor-clara);
+    vertical-align: middle;
+}
+.pg-carrinho .table-light th {
+    background-color: var(--cor-fundo-alt);
+    color: var(--cor-secundaria);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--cor-clara);
+}
+
+/* --- 5.6. CHECKOUT (.pg-checkout) --- */
+.pg-checkout .main-container {
+    padding-top: calc(var(--header-height) + 20px);
+}
+
+.pg-checkout .checkout-img-thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    background-color: var(--cor-fundo-alt);
+    border: 1px solid var(--cor-clara) !important;
+    border-radius: 8px;
+}
+
+.pg-checkout .price-text {
+    color: #27ae60;
+}
+
+@media (min-width: 768px) {
+    .pg-checkout .w-md-auto {
+        width: auto !important;
+    }
+}
+
+.pg-sucesso .main-container {
+    padding-top: calc(var(--header-height) + 20px);
+    padding-bottom: 40px;
+}
+
+/* ==========================================================================
+   6. IMPRESSÃO E UTILITÁRIOS GERAIS
+   ========================================================================== */
+
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    .no-print, 
+    .main-header, 
+    .footer {
+        display: none !important;
+    }
+    .pg-sucesso .main-container {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    .card, .produto-box, .login-box, .cadastro-box {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+}

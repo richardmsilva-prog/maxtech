@@ -129,135 +129,226 @@ if (!$carrinhoVazio) {
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Carrinho - MaxTech</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .bg-topbar {
+            background-color: #2c3e50;
+        }
+        .cart-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+        .item-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+        .qty-input {
+            width: 45px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .btn-action-qty {
+            padding: 0.25rem 0.6rem;
+        }
+        .btn-checkout {
+            transition: all 0.3s ease;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+        }
+    </style>
 </head>
-<body class="pagina-carrinho">
+<body class="pagina-carrinho d-flex flex-column min-vh-100" style="background-color: #f8f9fa;">
 
-    <header class="topbar">
-        <span class="topbar-titulo">MaxTech - Installation & Products</span>
-        <div class="topbar-usuario">
-            <?php if ($logado): ?>
-                Olá, <strong><?= htmlspecialchars($nomeUsuario) ?></strong> &nbsp;|&nbsp;
-                <a href="logout.php">Sair</a>
-            <?php else: ?>
-                <a href="login.php" style="color: #fff; font-weight: bold; text-decoration: none;">Fazer Login</a> &nbsp;|&nbsp;
-                <a href="cadastro.php" style="color: #fff; text-decoration: none;">Cadastrar-se</a>
-            <?php endif; ?>
-            &nbsp;|&nbsp;
-            <a href="index.php" style="color: #fff; text-decoration: none;">Voltar à Loja</a>
+    <nav class="navbar navbar-dark bg-topbar topbar py-3 shadow-sm">
+        <div class="container flex-column flex-sm-row justify-content-between gap-2">
+            <a class="navbar-brand fw-bold fs-4 m-0" href="index.php">
+                <i class="fa-solid fa-microchip text-primary me-2"></i>MaxTech
+            </a>
+            <div class="topbar-usuario text-white small">
+                <?php if ($logado): ?>
+                    <i class="fa-solid fa-user text-muted me-1"></i> Olá, <strong class="text-light"><?= htmlspecialchars($nomeUsuario) ?></strong>
+                    <span class="mx-2 text-muted">|</span>
+                    <a href="logout.php" class="text-danger text-decoration-none fw-semibold"><i class="fa-solid fa-right-from-bracket me-1"></i>Sair</a>
+                <?php else: ?>
+                    <a href="login.php" class="text-white text-decoration-none fw-bold me-2"><i class="fa-solid fa-right-to-bracket me-1"></i>Login</a>
+                    <span class="text-muted">|</span>
+                    <a href="cadastro.php" class="text-white text-decoration-none ms-2">Cadastrar-se</a>
+                <?php endif; ?>
+                <span class="mx-2 text-muted">|</span>
+                <a href="index.php" class="text-info text-decoration-none fw-semibold"><i class="fa-solid fa-store me-1"></i>Voltar à Loja</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="container carrinho-conteudo" style="padding-top: 30px; padding-bottom: 50px;">
+    <main class="container py-5 flex-grow-1">
         
-        <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px;">
-            <i class="fa-solid fa-cart-shopping"></i> Meu Carrinho
-        </h1>
+        <div class="text-center mb-5">
+            <h1 class="fw-bold text-dark display-6">
+                <i class="fa-solid fa-cart-shopping text-primary me-2"></i>Meu Carrinho
+            </h1>
+            <p class="text-muted">Gerencie os itens selecionados antes de fechar o seu pedido.</p>
+        </div>
 
         <?php if (isset($_SESSION["mensagem"])): ?>
-            <div style="background-color: #f39c12; color: white; padding: 15px; border-radius: 5px; text-align: center; margin-bottom: 20px;">
-                <i class="fa-solid fa-triangle-exclamation"></i> <?= htmlspecialchars($_SESSION["mensagem"]) ?>
+            <div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <?= htmlspecialchars($_SESSION["mensagem"]) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php unset($_SESSION["mensagem"]);  ?>
+            <?php unset($_SESSION["mensagem"]); ?>
         <?php endif; ?>
 
         <?php if ($carrinhoVazio || empty($produtosCarrinho)): ?>
             
-            <div style="text-align: center; padding: 50px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <i class="fa-solid fa-box-open" style="font-size: 4em; color: #bdc3c7; margin-bottom: 20px;"></i>
-                <h2 style="color: #7f8c8d;">Seu carrinho está vazio!</h2>
-                <p style="color: #95a5a6; margin-bottom: 30px;">Que tal dar uma olhada em nossos produtos?</p>
-                <a href="index.php" class="btn btn-principal" style="padding: 10px 20px; text-decoration: none;">Ir para a Vitrine</a>
+            <div class="card cart-card p-5 text-center bg-white">
+                <div class="py-4">
+                    <i class="fa-solid fa-box-open text-muted mb-4 shadow-sm p-4 bg-light rounded-circle" style="font-size: 4rem;"></i>
+                    <h2 class="fw-bold text-secondary mb-2">Seu carrinho está vazio!</h2>
+                    <p class="text-muted mb-4 fs-5">Que tal dar uma olhada em nossos ótimos produtos e serviços?</p>
+                    <a href="index.php" class="btn btn-primary btn-lg px-4 py-3 fw-bold rounded-3 shadow">
+                        <i class="fa-solid fa-store me-2"></i>Ir para a Vitrine
+                    </a>
+                </div>
             </div>
 
         <?php else: ?>
 
-            <section class="card-tabela">
-                <table class="tabela-produtos" style="width: 100%; text-align: left; background: #fff; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #ecf0f1;">
-                            <th>Produto</th>
-                            <th>Preço</th>
-                            <th style="text-align: center;">Quantidade</th>
-                            <th>Subtotal</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($produtosCarrinho as $item): ?>
-                            <tr style="border-bottom: 1px solid #ecf0f1;">
-                                
-                                <td style="display: flex; align-items: center; gap: 15px; padding: 15px 10px;">
-                                    <?php $img = !empty($item['imagem']) ? $item['imagem'] : "../assets/img/sem-imagem.png"; ?>
-                                    <img src="<?= htmlspecialchars($img) ?>" alt="Imagem" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                                    <strong><?= htmlspecialchars($item['nome_produto']) ?></strong>
-                                </td>
-                                
-                                <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
-                                
-                                <td style="text-align: center;">
-                                    <div style="display: flex; justify-content: center; gap: 5px;">
-                                        <form action="carrinho.php" method="POST" style="margin: 0;">
-                                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                                            <input type="hidden" name="acao" value="diminuir">
-                                            <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
-                                            <button type="submit" style="padding: 5px 10px; cursor: pointer;">-</button>
-                                        </form>
-                                        
-                                        <input type="text" value="<?= $item['quantidade'] ?>" readonly style="width: 40px; text-align: center; border: 1px solid #ccc;">
-                                        
-                                        <form action="carrinho.php" method="POST" style="margin: 0;">
-                                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                                            <input type="hidden" name="acao" value="adicionar">
-                                            <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
-                                            <?php if ($item['quantidade'] >= $item['estoque']): ?>
-                                                <button type="button" disabled style="padding: 5px 10px; cursor: not-allowed; background-color: #bdc3c7; color: #fff; border: none;" title="Estoque máximo atingido">+</button>
-                                            <?php else: ?>
-                                                <button type="submit" style="padding: 5px 10px; cursor: pointer;">+</button>
-                                            <?php endif; ?>
-                                        </form>
-                                    </div>
-                                </td>
+            <div class="row g-4">
+                
+                <div class="col-12 col-xl-8">
+                    <div class="card cart-card bg-white overflow-hidden">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light text-uppercase small tracking-wider" style="font-size: 0.8rem;">
+                                    <tr>
+                                        <th class="py-3 ps-4">Produto</th>
+                                        <th class="py-3">Preço</th>
+                                        <th class="py-3 text-center" style="width: 140px;">Qtd</th>
+                                        <th class="py-3">Subtotal</th>
+                                        <th class="py-3 text-center pe-4" style="width: 80px;">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                    <?php foreach ($produtosCarrinho as $item): ?>
+                                        <tr>
+                                            <td class="py-3 ps-4">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <?php $img = !empty($item['imagem']) ? $item['imagem'] : "../assets/img/sem-imagem.png"; ?>
+                                                    <img src="<?= htmlspecialchars($img) ?>" alt="Imagem do Produto" class="item-img p-1 shadow-sm">
+                                                    <div>
+                                                        <span class="d-block fw-bold text-dark fs-6"><?= htmlspecialchars($item['nome_produto']) ?></span>
+                                                        <span class="badge bg-light text-muted border small">Cód: #<?= $item['id_produto'] ?></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="py-3 text-secondary fw-semibold">
+                                                R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                                            </td>
+                                            
+                                            <td class="py-3">
+                                                <div class="d-flex justify-content-center align-items-center gap-1">
+                                                    <form action="carrinho.php" method="POST" class="m-0">
+                                                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                                                        <input type="hidden" name="acao" value="diminuir">
+                                                        <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary btn-action-qty fw-bold rounded-2">-</button>
+                                                    </form>
+                                                    
+                                                    <input type="text" value="<?= $item['whitespace-normalized' === '' ? '' : $item['quantidade']] ?>" readonly class="form-control form-control-sm qty-input bg-light border-0 rounded-2 text-dark">
+                                                    
+                                                    <form action="carrinho.php" method="POST" class="m-0">
+                                                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                                                        <input type="hidden" name="acao" value="adicionar">
+                                                        <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
+                                                        
+                                                        <?php if ($item['quantidade'] >= $item['estoque']): ?>
+                                                            <button type="button" disabled class="btn btn-sm btn-light btn-action-qty rounded-2 border text-muted" title="Estoque máximo atingido">
+                                                                <i class="fa-solid fa-ban" style="font-size: 0.75rem;"></i>
+                                                            </button>
+                                                        <?php else: ?>
+                                                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-action-qty fw-bold rounded-2">+</button>
+                                                        <?php endif; ?>
+                                                    </form>
+                                                </div>
+                                            </td>
 
-                                <td><strong>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></strong></td>
-                                
-                                <td>
-                                    <form action="carrinho.php" method="POST" style="margin: 0;">
-                                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                                        <input type="hidden" name="acao" value="remover">
-                                        <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
-                                        <button type="submit" style="background: transparent; color: #e74c3c; border: none; cursor: pointer; font-size: 1.2em;">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </section>
-
-            <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
-                <div style="background: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.2em;">
-                        <span>Total:</span>
-                        <strong style="color: #27ae60;">R$ <?= number_format($totalCarrinho, 2, ',', '.') ?></strong>
+                                            <td class="py-3 fw-bold text-dark fs-6">
+                                                R$ <?= number_format($item['subtotal'], 2, ',', '.') ?>
+                                            </td>
+                                            
+                                            <td class="py-3 text-center pe-4">
+                                                <form action="carrinho.php" method="POST" class="m-0">
+                                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                                                    <input type="hidden" name="acao" value="remover">
+                                                    <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
+                                                    <button type="submit" class="btn btn-link text-danger p-0 border-0 fs-5 lh-1 transition-all" title="Remover item">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    
-                    <a href="checkout.php" class="btn btn-principal" style="display: block; text-align: center; background-color: #27ae60; padding: 15px; font-size: 1.1em; text-decoration: none; border-radius: 5px;">
-                        Finalizar Compra
-                    </a>
                 </div>
+
+                <div class="col-12 col-xl-4">
+                    <div class="card cart-card bg-white p-4">
+                        <h4 class="fw-bold text-dark border-b pb-2 mb-3">Resumo da Compra</h4>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Total de Itens:</span>
+                            <span class="fw-semibold text-dark fs-5"><?= $qtdCarrinho ?> un.</span>
+                        </div>
+                        
+                        <hr class="text-muted my-3">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="text-dark fw-bold uppercase fs-7" style="letter-spacing: 0.5px;">Valor Total:</span>
+                            <strong class="text-success fs-3 fw-bolder">
+                                R$ <?= number_format($totalCarrinho, 2, ',', '.') ?>
+                            </strong>
+                        </div>
+                        
+                        <a href="checkout.php" class="btn btn-success btn-checkout btn-lg w-100 fw-bold py-3 rounded-3 shadow">
+                            <i class="fa-solid fa-credit-card me-2"></i>Ir para o Pagamento
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
         <?php endif; ?>
 
     </main>
+
+    <footer class="rodape mt-auto py-4 bg-white border-top text-center text-secondary">
+        <div class="container">
+            <p class="mb-0 small">&copy; <?= date("Y") ?> <strong class="text-dark">MaxTech</strong>. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

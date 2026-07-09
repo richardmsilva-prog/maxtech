@@ -165,74 +165,146 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Resumo do Pedido</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Checkout Seguro - MaxTech</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .checkout-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        .item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+        .bg-topbar {
+            background-color: #2c3e50;
+        }
+        .btn-confirmar {
+            transition: all 0.3s ease;
+        }
+        .btn-confirmar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
-    <div class="max-w-4xl mx-auto mt-10 p-6">
+<body class="pagina-checkout d-flex flex-column min-vh-100" style="background-color: #f4f6f9;">
+
+    <nav class="navbar navbar-dark bg-topbar topbar py-3 shadow-sm" style="border-bottom: 4px solid #198754;">
+        <div class="container justify-content-center justify-content-md-between">
+            <a class="navbar-brand fw-bold fs-4 m-0" href="index.php">
+                <i class="fa-solid fa-microchip text-primary me-2"></i>MaxTech
+            </a>
+            <div class="d-none d-md-flex align-items-center text-white">
+                <i class="fa-solid fa-lock text-success me-2 fs-5"></i>
+                <span class="fw-semibold">Ambiente 100% Seguro</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 flex-grow-1">
         
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Resumo do Pedido</h1>
-            <p class="text-gray-500 mt-2">Confira os itens antes de finalizar a compra.</p>
-        </header>
-
-        <?php if (isset($_SESSION["mensagem"])): ?>
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded shadow-sm" role="alert">
-                <p><?= htmlspecialchars($_SESSION["mensagem"]) ?></p>
-            </div>
-            <?php unset($_SESSION["mensagem"]); ?>
-        <?php endif; ?>
-
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4 border-b pb-2">Itens no Carrinho</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9 col-xl-8">
                 
-                <ul class="divide-y divide-gray-200">
-                    <?php foreach ($produtosResumo as $item): ?>
-                        <li class="py-4 flex items-center justify-between">
-                            <div class="flex items-center">
-                                <img src="<?= htmlspecialchars($item["imagem"]) ?>" alt="<?= htmlspecialchars($item["nome"]) ?>" class="w-16 h-16 object-cover rounded border">
-                                
-                                <div class="ml-4">
-                                    <h3 class="text-lg font-medium text-gray-900"><?= htmlspecialchars($item["nome"]) ?></h3>
-                                    <p class="text-sm text-gray-500">Valor un: R$ <?= number_format($item["preco"], 2, ",", ".") ?></p>
-                                </div>
-                            </div>
-                            
-                            <div class="text-right">
-                                <p class="text-sm text-gray-500">Qtd: <span class="font-semibold"><?= $item["quantidade"] ?></span></p>
-                                <p class="text-lg font-bold text-gray-900">R$ <?= number_format($item["subtotal"], 2, ",", ".") ?></p>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <div class="bg-gray-100 p-6 flex flex-col md:flex-row items-center justify-between">
-                
-                <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-gray-600 uppercase tracking-wide">Total a Pagar</p>
-                    <p class="text-3xl font-extrabold text-blue-600">R$ <?= number_format($totalGeral, 2, ",", ".") ?></p>
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold text-dark mb-2">Resumo do Pedido</h1>
+                    <p class="text-muted">Confira seus itens com atenção antes de finalizar a compra.</p>
                 </div>
 
-                <form action="checkout.php" method="POST" class="w-full md:w-auto">
-                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
+                <?php if (isset($_SESSION["mensagem"])): ?>
+                    <div class="alert alert-warning alert-dismissible fade show shadow-sm border-0" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <?= htmlspecialchars($_SESSION["mensagem"]) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION["mensagem"]); ?>
+                <?php endif; ?>
+
+                <div class="card checkout-card overflow-hidden">
                     
-                    <button type="submit" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded shadow-lg transition duration-200 ease-in-out transform hover:-translate-y-1">
-                        Confirmar e Pagar
-                    </button>
-                </form>
+                    <div class="card-header bg-white p-4 border-bottom">
+                        <h4 class="mb-0 fw-bold text-secondary">
+                            <i class="fa-solid fa-box me-2"></i>Itens no Carrinho
+                        </h4>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($produtosResumo as $item): ?>
+                            <?php 
+                                $caminhoImagem = !empty($item['imagem']) ? $item['imagem'] : "../assets/img/sem-imagem.png";
+                            ?>
+                            <li class="list-group-item p-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                                
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="<?= htmlspecialchars($caminhoImagem) ?>" alt="<?= htmlspecialchars($item["nome"]) ?>" class="item-img p-1 shadow-sm">
+                                    <div>
+                                        <h5 class="mb-1 fw-bold text-dark"><?= htmlspecialchars($item["nome"]) ?></h5>
+                                        <p class="mb-0 text-muted small">Valor un: R$ <?= number_format($item["preco"], 2, ",", ".") ?></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-md-end mt-2 mt-md-0 px-md-3 border-start-md">
+                                    <p class="mb-0 text-muted small">Quantidade: <strong class="text-dark fs-6"><?= $item["quantidade"] ?></strong></p>
+                                    <h5 class="mb-0 fw-bold text-dark mt-1">R$ <?= number_format($item["subtotal"], 2, ",", ".") ?></h5>
+                                </div>
+
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <div class="card-footer bg-light p-4 p-md-5">
+                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
+                            
+                            <div class="text-center text-md-start">
+                                <span class="text-muted text-uppercase fw-semibold" style="letter-spacing: 1px; font-size: 0.85rem;">Total a Pagar</span>
+                                <h2 class="text-primary fw-bolder mb-0 mt-1" style="font-size: 2.2rem;">
+                                    R$ <?= number_format($totalGeral, 2, ",", ".") ?>
+                                </h2>
+                            </div>
+
+                            <form action="checkout.php" method="POST" class="w-100 m-0" style="max-width: 300px;">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
+                                
+                                <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 px-4 rounded-3 btn-confirmar shadow">
+                                    <i class="fa-solid fa-lock me-2"></i> Confirmar e Pagar
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="carrinho.php" class="text-decoration-none fw-semibold text-secondary transition-all" style="font-size: 1.05rem;">
+                        <i class="fa-solid fa-arrow-left me-2"></i>Voltar para o carrinho
+                    </a>
+                </div>
 
             </div>
         </div>
-        
-        <div class="mt-6 text-center">
-            <a href="carrinho.php" class="text-blue-500 hover:text-blue-700 font-medium">← Voltar para o carrinho</a>
+    </main>
+
+    <footer class="rodape mt-auto py-4 bg-white border-top text-center text-secondary">
+        <div class="container">
+            <p class="mb-1"><i class="fa-solid fa-shield-halved text-success me-1"></i> Seus dados estão protegidos.</p>
+            <p class="mb-0 small">&copy; <?= date("Y") ?> <strong class="text-dark">MaxTech</strong>. Todos os direitos reservados.</p>
         </div>
+    </footer>
 
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
