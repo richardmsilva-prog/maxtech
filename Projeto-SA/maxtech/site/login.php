@@ -73,94 +73,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login - MaxTech</title>
     
     <link rel="stylesheet" href="../assets/css/style.css">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        .card-login {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-        .input-group-text {
-            background-color: transparent;
-            border-right: none;
-        }
-        .form-control.input-login {
-            border-left: none;
-        }
-        .form-control.input-login:focus {
-            box-shadow: none;
-            border-color: #dee2e6;
-        }
-    </style>
 </head>
-<body class="pagina-login d-flex align-items-center min-vh-100" style="background-color: #f4f6f9;">
+<body class="pg-login d-flex align-items-center min-vh-100">
 
-    <div class="container form-container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 col-lg-4">
-                
-                <div class="card card-login">
-                    <div class="card-body p-5">
-                        
-                        <div class="text-center mb-4">
-                            <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: #0d6efd; margin-bottom: 15px;"></i>
-                            <h1 class="h3 fw-bold mb-1">Login</h1>
-                            <p class="text-muted subtitulo">Portal do Cliente - MaxTech</p>
-                        </div>
+    <div class="container main-container">
+        <div class="row align-items-center justify-content-center gap-4 gap-md-0">
+            
+            <div class="col-12 col-md-6 text-center brand-section">
+                <img src="../assets/img/Logo_MaxTech.jpg" alt="Logo da empresa MaxTech" class="brand-logo-large">
+            </div>
 
-                        <?php if (!empty($erro_login)): ?>
-                            <div class="alert alert-danger d-flex align-items-center p-3 mb-4" role="alert">
-                                <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                                <div><?= htmlspecialchars($erro_login) ?></div>
-                            </div>
-                        <?php endif; ?>
-
-                        <form action="login.php" method="POST">
-                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                            
-                            <div class="mb-3 campo">
-                                <label for="usuario" class="form-label fw-semibold text-secondary">Usuário</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fa-solid fa-user text-muted"></i>
-                                    </span>
-                                    <input type="text" id="usuario" name="usuario" class="form-control input-login" value="<?= htmlspecialchars($usuario ?? '') ?>" required placeholder="Digite seu usuário">
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4 campo">
-                                <label for="senha" class="form-label fw-semibold text-secondary">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fa-solid fa-lock text-muted"></i>
-                                    </span>
-                                    <input type="password" id="senha" name="senha" class="form-control input-login" required placeholder="Digite sua senha">
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 py-2 btn-principal" style="border-radius: 8px; font-weight: bold;">
-                                <i class="fa-solid fa-right-to-bracket me-2"></i> Entrar
-                            </button>
-                        </form>
-
-                        <div class="text-center mt-4 pt-3 border-top link-rodape">
-                            <span class="text-muted small">Ainda não tem cadastro?</span><br>
-                            <a href="cadastro.php" class="text-decoration-none fw-bold" style="color: #0d6efd; letter-spacing: 0.5px;">
-                                Cadastre-se aqui <i class="fa-solid fa-arrow-right fa-sm ms-1"></i>
-                            </a>
-                        </div>
-
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="login-box p-4 p-sm-5">
+                    
+                    <div class="mb-4">
+                        <h2 class="h3 fw-bold mb-1">Acesse sua conta</h2>
+                        <p class="text-muted small">Informe seus dados para entrar no sistema.</p>
                     </div>
-                </div>
 
+                    <?php if (!empty($erro_login)): ?>
+                        <div class="alert-custom-danger d-flex align-items-center p-3 mb-4" role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                            <div><?= htmlspecialchars($erro_login) ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="login.php" method="POST">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                        
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label fw-semibold" style="color: var(--cor-texto-claro);">Usuário</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-user input-icon"></i>
+                                <input type="text" id="usuario" name="usuario" class="form-control" value="<?= htmlspecialchars($usuario ?? '') ?>" required placeholder="Digite seu usuário">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="senha" class="form-label fw-semibold" style="color: var(--cor-texto-claro);">Senha</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="senha" name="senha" class="form-control" required placeholder="Digite sua senha">
+                                <i class="fa-solid fa-eye toggle-password" id="btnToggleSenha"></i>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="remember-me">
+                                <input type="checkbox" id="lembrar" name="lembrar">
+                                <label for="lembrar">Lembrar de mim</label>
+                            </div>
+                            </div>
+                        
+                        <button type="submit" class="btn-custom-primary w-100 py-3 fw-bold fs-6">
+                            ENTRAR
+                        </button>
+                    </form>
+
+                    <div class="separator my-4">
+                        <span class="px-3 text-muted small">ou</span>
+                    </div>
+
+                    <button type="button" class="btn-custom-secondary w-100 py-3 fw-bold fs-6 d-flex justify-content-center align-items-center" onclick="window.location.href='cadastro.php'">
+                        <i class="fa-solid fa-user-plus me-2"></i> CRIAR CONTA
+                    </button>
+
+                </div> 
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const btnToggleSenha = document.querySelector('#btnToggleSenha');
+        const inputSenha = document.querySelector('#senha');
+
+        btnToggleSenha.addEventListener('click', function () {
+            const isPassword = inputSenha.getAttribute('type') === 'password';
+            inputSenha.setAttribute('type', isPassword ? 'text' : 'password');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 </html>

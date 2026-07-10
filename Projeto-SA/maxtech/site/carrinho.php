@@ -140,71 +140,49 @@ if (!$carrinhoVazio) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        .bg-topbar {
-            background-color: #2c3e50;
-        }
-        .cart-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-        }
-        .item-img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            border-radius: 8px;
-            background-color: #fff;
-            border: 1px solid #dee2e6;
-        }
-        .qty-input {
-            width: 45px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .btn-action-qty {
-            padding: 0.25rem 0.6rem;
-        }
-        .btn-checkout {
-            transition: all 0.3s ease;
-        }
-        .btn-checkout:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
-        }
-    </style>
 </head>
-<body class="pagina-carrinho d-flex flex-column min-vh-100" style="background-color: #f8f9fa;">
+<body class="pg-carrinho d-flex flex-column min-vh-100">
 
-    <nav class="navbar navbar-dark bg-topbar topbar py-3 shadow-sm">
-        <div class="container flex-column flex-sm-row justify-content-between gap-2">
-            <a class="navbar-brand fw-bold fs-4 m-0" href="index.php">
-                <i class="fa-solid fa-microchip text-primary me-2"></i>MaxTech
+    <nav class="navbar navbar-expand-lg main-header">
+        <div class="container">
+            <a class="header-logo d-flex align-items-center" href="index.php">
+                <img src="../assets/img/Logo_MaxTech.jpg" alt="MaxTech Vendas, Entrega e Instalação">
             </a>
-            <div class="topbar-usuario text-white small">
-                <?php if ($logado): ?>
-                    <i class="fa-solid fa-user text-muted me-1"></i> Olá, <strong class="text-light"><?= htmlspecialchars($nomeUsuario) ?></strong>
-                    <span class="mx-2 text-muted">|</span>
-                    <a href="logout.php" class="text-danger text-decoration-none fw-semibold"><i class="fa-solid fa-right-from-bracket me-1"></i>Sair</a>
-                <?php else: ?>
-                    <a href="login.php" class="text-white text-decoration-none fw-bold me-2"><i class="fa-solid fa-right-to-bracket me-1"></i>Login</a>
-                    <span class="text-muted">|</span>
-                    <a href="cadastro.php" class="text-white text-decoration-none ms-2">Cadastrar-se</a>
-                <?php endif; ?>
-                <span class="mx-2 text-muted">|</span>
-                <a href="index.php" class="text-info text-decoration-none fw-semibold"><i class="fa-solid fa-store me-1"></i>Voltar à Loja</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end header-nav" id="navbarMenu">
+                <div class="navbar-nav align-items-center gap-3">
+                    
+                    <?php if ($logado): ?>
+                        <span style="color: var(--cor-texto-claro);">
+                            Olá, <strong style="color: var(--cor-primaria);"><?= htmlspecialchars($nomeUsuario) ?></strong>
+                        </span>
+                        <a href="logout.php" class="btn-custom-secondary btn-sm px-3 py-1 text-decoration-none">Sair</a>
+                    <?php else: ?>
+                        <a href="login.php" class="hover-primary">Fazer Login</a>
+                        <a href="cadastro.php" class="btn-custom-primary px-4 py-2 text-decoration-none">Cadastrar-se</a>
+                    <?php endif; ?>
+                    
+                    <div class="vr d-none d-lg-block mx-2" style="background-color: var(--cor-borda);"></div>
+                    
+                    <a href="index.php" class="btn-custom-secondary px-3 py-2 text-decoration-none d-flex align-items-center">
+                        <i class="fa-solid fa-store me-1"></i> Voltar à Loja
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="container py-5 flex-grow-1">
+    <main class="container main-container flex-grow-1 mb-5">
         
         <div class="text-center mb-5">
-            <h1 class="fw-bold text-dark display-6">
-                <i class="fa-solid fa-cart-shopping text-primary me-2"></i>Meu Carrinho
+            <h1 class="fw-bold" style="color: var(--cor-secundaria);">
+                <i class="fa-solid fa-cart-shopping me-2" style="color: var(--cor-primaria);"></i>Meu Carrinho
             </h1>
-            <p class="text-muted">Gerencie os itens selecionados antes de fechar o seu pedido.</p>
+            <p style="color: var(--cor-texto-claro);">Gerencie os itens selecionados antes de fechar o seu pedido.</p>
         </div>
 
         <?php if (isset($_SESSION["mensagem"])): ?>
@@ -218,12 +196,12 @@ if (!$carrinhoVazio) {
 
         <?php if ($carrinhoVazio || empty($produtosCarrinho)): ?>
             
-            <div class="card cart-card p-5 text-center bg-white">
+            <div class="border rounded-4 p-5 text-center bg-white shadow-sm">
                 <div class="py-4">
-                    <i class="fa-solid fa-box-open text-muted mb-4 shadow-sm p-4 bg-light rounded-circle" style="font-size: 4rem;"></i>
-                    <h2 class="fw-bold text-secondary mb-2">Seu carrinho está vazio!</h2>
-                    <p class="text-muted mb-4 fs-5">Que tal dar uma olhada em nossos ótimos produtos e serviços?</p>
-                    <a href="index.php" class="btn btn-primary btn-lg px-4 py-3 fw-bold rounded-3 shadow">
+                    <i class="fa-solid fa-box-open mb-4 p-4 bg-light rounded-circle text-muted" style="font-size: 4rem;"></i>
+                    <h2 class="fw-bold mb-2" style="color: var(--cor-secundaria);">Seu carrinho está vazio!</h2>
+                    <p class="mb-4 fs-5" style="color: var(--cor-texto-claro);">Que tal dar uma olhada em nossos ótimos produtos e serviços?</p>
+                    <a href="index.php" class="btn-custom-primary btn-lg px-4 py-3 fw-bold text-decoration-none d-inline-block">
                         <i class="fa-solid fa-store me-2"></i>Ir para a Vitrine
                     </a>
                 </div>
@@ -234,10 +212,10 @@ if (!$carrinhoVazio) {
             <div class="row g-4">
                 
                 <div class="col-12 col-xl-8">
-                    <div class="card cart-card bg-white overflow-hidden">
+                    <div class="border rounded-4 bg-white overflow-hidden shadow-sm">
                         <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="table-light text-uppercase small tracking-wider" style="font-size: 0.8rem;">
+                            <table class="table align-middle mb-0">
+                                <thead class="table-light">
                                     <tr>
                                         <th class="py-3 ps-4">Produto</th>
                                         <th class="py-3">Preço</th>
@@ -246,34 +224,34 @@ if (!$carrinhoVazio) {
                                         <th class="py-3 text-center pe-4" style="width: 80px;">Ação</th>
                                     </tr>
                                 </thead>
-                                <tbody class="border-top-0">
+                                <tbody>
                                     <?php foreach ($produtosCarrinho as $item): ?>
                                         <tr>
                                             <td class="py-3 ps-4">
                                                 <div class="d-flex align-items-center gap-3">
                                                     <?php $img = !empty($item['imagem']) ? $item['imagem'] : "../assets/img/sem-imagem.png"; ?>
-                                                    <img src="<?= htmlspecialchars($img) ?>" alt="Imagem do Produto" class="item-img p-1 shadow-sm">
+                                                    <img src="<?= htmlspecialchars($img) ?>" alt="Imagem do Produto" class="cart-img-thumb shadow-sm">
                                                     <div>
-                                                        <span class="d-block fw-bold text-dark fs-6"><?= htmlspecialchars($item['nome_produto']) ?></span>
-                                                        <span class="badge bg-light text-muted border small">Cód: #<?= $item['id_produto'] ?></span>
+                                                        <span class="d-block fw-bold fs-6" style="color: var(--cor-secundaria);"><?= htmlspecialchars($item['nome_produto']) ?></span>
+                                                        <span class="badge bg-white text-muted border small mt-1">Cód: #<?= $item['id_produto'] ?></span>
                                                     </div>
                                                 </div>
                                             </td>
                                             
-                                            <td class="py-3 text-secondary fw-semibold">
+                                            <td class="py-3 price-text fw-semibold">
                                                 R$ <?= number_format($item['preco'], 2, ',', '.') ?>
                                             </td>
                                             
                                             <td class="py-3">
-                                                <div class="d-flex justify-content-center align-items-center gap-1">
+                                                <div class="d-flex justify-content-center align-items-center gap-1 cart-qty-controls">
                                                     <form action="carrinho.php" method="POST" class="m-0">
                                                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                         <input type="hidden" name="acao" value="diminuir">
                                                         <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-secondary btn-action-qty fw-bold rounded-2">-</button>
+                                                        <button type="submit" class="qty-btn rounded-2 fw-bold">-</button>
                                                     </form>
                                                     
-                                                    <input type="text" value="<?= $item['whitespace-normalized' === '' ? '' : $item['quantidade']] ?>" readonly class="form-control form-control-sm qty-input bg-light border-0 rounded-2 text-dark">
+                                                    <input type="text" value="<?= $item['quantidade'] ?>" readonly class="form-control form-control-sm text-center fw-bold bg-light border-0 rounded-2 text-dark" style="width: 45px;">
                                                     
                                                     <form action="carrinho.php" method="POST" class="m-0">
                                                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
@@ -281,17 +259,17 @@ if (!$carrinhoVazio) {
                                                         <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
                                                         
                                                         <?php if ($item['quantidade'] >= $item['estoque']): ?>
-                                                            <button type="button" disabled class="btn btn-sm btn-light btn-action-qty rounded-2 border text-muted" title="Estoque máximo atingido">
-                                                                <i class="fa-solid fa-ban" style="font-size: 0.75rem;"></i>
+                                                            <button type="button" disabled class="qty-btn rounded-2 text-muted" style="opacity: 0.5;" title="Estoque máximo atingido">
+                                                                <i class="fa-solid fa-ban" style="font-size: 0.7rem;"></i>
                                                             </button>
                                                         <?php else: ?>
-                                                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-action-qty fw-bold rounded-2">+</button>
+                                                            <button type="submit" class="qty-btn rounded-2 fw-bold">+</button>
                                                         <?php endif; ?>
                                                     </form>
                                                 </div>
                                             </td>
 
-                                            <td class="py-3 fw-bold text-dark fs-6">
+                                            <td class="py-3 price-text fw-bold fs-6">
                                                 R$ <?= number_format($item['subtotal'], 2, ',', '.') ?>
                                             </td>
                                             
@@ -300,7 +278,7 @@ if (!$carrinhoVazio) {
                                                     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                     <input type="hidden" name="acao" value="remover">
                                                     <input type="hidden" name="id_produto" value="<?= $item['id_produto'] ?>">
-                                                    <button type="submit" class="btn btn-link text-danger p-0 border-0 fs-5 lh-1 transition-all" title="Remover item">
+                                                    <button type="submit" class="btn btn-link delete-btn p-0 border-0 fs-5 lh-1 text-decoration-none shadow-none" title="Remover item">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </form>
@@ -314,24 +292,24 @@ if (!$carrinhoVazio) {
                 </div>
 
                 <div class="col-12 col-xl-4">
-                    <div class="card cart-card bg-white p-4">
-                        <h4 class="fw-bold text-dark border-b pb-2 mb-3">Resumo da Compra</h4>
+                    <div class="border rounded-4 bg-white p-4 shadow-sm">
+                        <h4 class="fw-bold mb-3 pb-2 border-bottom" style="color: var(--cor-secundaria);">Resumo da Compra</h4>
                         
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-muted">Total de Itens:</span>
-                            <span class="fw-semibold text-dark fs-5"><?= $qtdCarrinho ?> un.</span>
+                            <span style="color: var(--cor-texto-claro);">Total de Itens:</span>
+                            <span class="fw-semibold fs-5" style="color: var(--cor-secundaria);"><?= $qtdCarrinho ?> un.</span>
                         </div>
                         
-                        <hr class="text-muted my-3">
+                        <hr class="my-3" style="border-color: var(--cor-clara);">
                         
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <span class="text-dark fw-bold uppercase fs-7" style="letter-spacing: 0.5px;">Valor Total:</span>
-                            <strong class="text-success fs-3 fw-bolder">
+                            <span class="fw-bold fs-7" style="color: var(--cor-secundaria); text-transform: uppercase; letter-spacing: 0.5px;">Valor Total:</span>
+                            <strong class="price-text fs-3 fw-bolder">
                                 R$ <?= number_format($totalCarrinho, 2, ',', '.') ?>
                             </strong>
                         </div>
                         
-                        <a href="checkout.php" class="btn btn-success btn-checkout btn-lg w-100 fw-bold py-3 rounded-3 shadow">
+                        <a href="checkout.php" class="btn-custom-primary btn-lg w-100 fw-bold py-3 text-center text-decoration-none d-block">
                             <i class="fa-solid fa-credit-card me-2"></i>Ir para o Pagamento
                         </a>
                     </div>
@@ -343,9 +321,9 @@ if (!$carrinhoVazio) {
 
     </main>
 
-    <footer class="rodape mt-auto py-4 bg-white border-top text-center text-secondary">
+    <footer class="footer text-center text-secondary">
         <div class="container">
-            <p class="mb-0 small">&copy; <?= date("Y") ?> <strong class="text-dark">MaxTech</strong>. Todos os direitos reservados.</p>
+            <p class="mb-0" style="color: var(--cor-texto-claro);">&copy; <?= date("Y") ?> <strong style="color: var(--cor-secundaria);">MaxTech</strong>. Todos os direitos reservados.</p>
         </div>
     </footer>
 

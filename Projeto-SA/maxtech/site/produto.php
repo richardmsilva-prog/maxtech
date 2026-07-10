@@ -45,69 +45,47 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compre <?= htmlspecialchars($produto["nome_produto"]) ?> na MaxTech. Garantia de qualidade, entrega e instalação.">
     <title><?= htmlspecialchars($produto["nome_produto"]) ?> - MaxTech</title>
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        .produto-imagem-wrapper {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            background-color: #fff;
-        }
-        .produto-imagem-wrapper img {
-            width: 100%;
-            height: auto;
-            max-height: 450px;
-            object-fit: contain; 
-            transition: transform 0.3s ease;
-        }
-        .produto-imagem-wrapper:hover img {
-            transform: scale(1.05); 
-        }
-        .bg-topbar {
-            background-color: #2c3e50;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 </head>
 
-<body class="pagina-produto d-flex flex-column min-vh-100" style="background-color: #f8f9fa;">
+<body class="pg-produto d-flex flex-column min-vh-100">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-topbar topbar py-3 shadow-sm" style="border-bottom: 4px solid #0d6efd;">
+    <nav class="navbar navbar-expand-lg main-header">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="index.php">
-                <i class="fa-solid fa-microchip text-primary me-2"></i>MaxTech
+            <a class="header-logo d-flex align-items-center" href="index.php">
+                <img src="../assets/img/Logo_MaxTech.jpg" alt="Logo da MaxTech Vendas, Entrega e Instalação" width="255" height="170">
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-label="Abrir menu de navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
-                <div class="navbar-nav align-items-center gap-3 topbar-usuario">
+            <div class="collapse navbar-collapse justify-content-end header-nav" id="navbarMenu">
+                <div class="navbar-nav align-items-center gap-3">
                     
                     <?php if ($logado): ?>
-                        <span class="text-light">
-                            Olá, <strong style="color: #f1c40f;"><?= htmlspecialchars($nomeUsuario) ?></strong>
+                        <span class="text-claro-custom">
+                            Olá, <strong class="text-primaria-custom"><?= htmlspecialchars($nomeUsuario) ?></strong>
                         </span>
-                        <a href="logout.php" class="btn btn-outline-light btn-sm rounded-pill px-3">Sair</a>
+                        <a href="logout.php" class="btn-custom-secondary btn-sm px-3 py-1 text-decoration-none">Sair</a>
                     <?php else: ?>
-                        <a href="login.php" class="nav-link text-white fw-semibold">Fazer Login</a>
-                        <a href="cadastro.php" class="btn btn-primary rounded-pill px-4 fw-semibold">Cadastrar-se</a>
+                        <a href="login.php" class="hover-primary">Fazer Login</a>
+                        <a href="cadastro.php" class="btn-custom-primary px-4 py-2 text-decoration-none">Cadastrar-se</a>
                     <?php endif; ?>
                     
-                    <div class="vr bg-light d-none d-lg-block mx-2"></div>
+                    <div class="vr d-none d-lg-block mx-2 bg-borda-custom"></div>
                     
-                    <a href="carrinho.php" class="btn btn-light rounded-pill position-relative px-4 fw-bold text-dark">
-                        <i class="fa-solid fa-cart-shopping meu-carrinho text-primary me-1"></i> Carrinho
+                    <a href="carrinho.php" class="btn-cart position-relative" aria-label="Acessar carrinho de compras">
+                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                         <?php if ($qtdCarrinho > 0): ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.85em;">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.75em;">
                                 <?= $qtdCarrinho ?>
                             </span>
                         <?php endif; ?>
@@ -117,72 +95,73 @@ try {
         </div>
     </nav>
 
-    <main class="container produto-conteudo flex-grow-1 py-5">
+    <main class="container main-container flex-grow-1 mb-5">
         <?php 
             $caminhoImagem = !empty($produto['imagem']) ? $produto['imagem'] : "../assets/img/sem-imagem.png";
         ?>
         
-        <div class="row bg-white p-4 p-md-5 rounded-4 shadow-sm align-items-center">
+        <div class="row produto-box bg-white p-4 p-md-5 align-items-center shadow-sm">
             
             <div class="col-12 col-md-6 mb-4 mb-md-0 text-center">
-                <div class="produto-imagem-wrapper p-3 border">
-                    <img src="<?= htmlspecialchars($caminhoImagem) ?>" alt="Imagem de <?= htmlspecialchars($produto['nome_produto']) ?>" class="img-fluid">
+                <div class="img-wrapper p-3">
+                    <img src="<?= htmlspecialchars($caminhoImagem) ?>" alt="Imagem detalhada do produto <?= htmlspecialchars($produto['nome_produto']) ?>" class="img-fluid border rounded" fetchpriority="high">
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 ps-md-5 produto-info">
+            <div class="col-12 col-md-6 ps-md-5">
                 
-                <h1 class="fw-bold mb-3" style="color: #212529; font-size: 2.2rem;">
+                <h1 class="fw-bold mb-3 produto-titulo">
                     <?= htmlspecialchars($produto["nome_produto"]) ?>
                 </h1>
                 
-                <h2 class="text-success fw-bolder mb-4" style="font-size: 2.5rem; letter-spacing: -1px;">
+                <h2 class="price-tag fw-bolder mb-4">
                     R$ <?= number_format($produto["preco"], 2, ",", ".") ?>
                 </h2>
                 
                 <div class="mb-4">
-                    <h5 class="fw-bold text-secondary mb-2">Descrição do Produto</h5>
-                    <p class="descricao text-muted" style="line-height: 1.7; font-size: 1.05rem;">
+                    <h3 class="h5 fw-bold mb-2 text-claro-custom">Descrição do Produto</h3>
+                    <p class="produto-desc">
                         <?= nl2br(htmlspecialchars($produto['descricao'] ?? "Nenhuma descrição disponível para este produto.")) ?>
                     </p>
                 </div>
                 
-                <hr class="my-4">
+                <hr class="my-4 border-borda-custom">
                 
                 <?php if ($produto['estoque'] <= 0): ?>
-                    <div class="alert alert-secondary border-0 text-center p-4 rounded-3" style="background-color: #f8d7da; color: #842029;">
-                        <i class="fa-solid fa-box-open fa-2x mb-2 opacity-50"></i>
-                        <h5 class="fw-bold mb-1">Produto Esgotado</h5>
+                    <div class="alert-custom-danger d-flex flex-column align-items-center text-center p-4 rounded-3 mb-3">
+                        <i class="fa-solid fa-box-open fa-2x mb-2 opacity-75" aria-hidden="true"></i>
+                        <h3 class="h5 fw-bold mb-1">Produto Esgotado</h3>
                         <p class="mb-0 small">Este item está temporariamente indisponível no momento.</p>
                     </div>
-                    <button class="btn btn-secondary w-100 py-3 fw-bold rounded-3" disabled style="cursor: not-allowed; opacity: 0.6;">
-                        <i class="fa-solid fa-ban me-2"></i> Indisponível
+                    <button class="btn-custom-secondary w-100 py-3 fw-bold btn-esgotado-lg" disabled aria-disabled="true">
+                        <i class="fa-solid fa-ban me-2" aria-hidden="true"></i> Indisponível
                     </button>
 
                 <?php else: ?>
-                    <p class="text-success fw-semibold mb-3">
-                        <i class="fa-solid fa-check-circle me-1"></i> Em estoque (<?= $produto['estoque'] ?> disponíveis)
+                    <p class="fw-semibold mb-3 text-vibrante-custom">
+                        <i class="fa-solid fa-check-circle me-1" aria-hidden="true"></i> Em estoque (<?= $produto['estoque'] ?> disponíveis)
                     </p>
                     
-                    <form action="carrinho.php" method="POST" class="form-comprar">
+                    <form action="carrinho.php" method="POST">
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
                         <input type="hidden" name="acao" value="adicionar">
                         <input type="hidden" name="id_produto" value="<?= $produto['id_produto'] ?>">
                         
                         <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="input-group" style="width: 140px;">
-                                <span class="input-group-text bg-light text-secondary border-end-0">Qtd</span>
-                                <input type="number" id="qtd" name="quantidade" class="form-control border-start-0 ps-0 fw-bold text-center" value="1" min="1" max="<?= $produto["estoque"] ?>">
+                            
+                            <div class="d-flex align-items-center">
+                                <label for="qtd" class="me-2 fw-semibold text-claro-custom">Qtd:</label>
+                                <input type="number" id="qtd" name="quantidade" class="form-control input-qtd fw-bold" value="1" min="1" max="<?= $produto["estoque"] ?>">
                             </div>
                             
-                            <button type="submit" class="btn btn-primary btn-principal flex-grow-1 py-3 fw-bold rounded-3 fs-5 shadow-sm transition-all" style="letter-spacing: 0.5px;">
-                                <i class="fa-solid fa-cart-plus me-2"></i> Adicionar ao Carrinho
+                            <button type="submit" class="btn-custom-primary flex-grow-1 py-3 fw-bold fs-5 d-flex justify-content-center align-items-center btn-add-carrinho">
+                                <i class="fa-solid fa-cart-plus me-2" aria-hidden="true"></i> Adicionar ao Carrinho
                             </button>
                         </div>
                     </form>
                     
-                    <div class="text-muted small mt-3">
-                        <i class="fa-solid fa-shield-halved text-primary me-1"></i> Compra segura garantida pela MaxTech
+                    <div class="small mt-3 text-claro-custom">
+                        <i class="fa-solid fa-shield-halved me-1 text-primaria-custom" aria-hidden="true"></i> Compra segura garantida pela MaxTech
                     </div>
                 <?php endif; ?>
 
@@ -190,12 +169,12 @@ try {
         </div>
     </main> 
 
-    <footer class="rodape mt-auto py-4 bg-white border-top text-center text-secondary">
+    <footer class="footer text-center text-secondary">
         <div class="container">
-            <p class="mb-0">&copy; <?= date("Y") ?> <strong class="text-dark">MaxTech</strong>. Todos os direitos reservados.</p>
+            <p class="mb-0 text-claro-custom">&copy; <?= date("Y") ?> <strong class="text-secundaria-custom">MaxTech</strong>. Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>
